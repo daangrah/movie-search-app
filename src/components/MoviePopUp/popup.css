@@ -21,13 +21,13 @@
   color: #0c221b;
   border-color: black;
   background: #b9e1cb;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
 }
 .popup-body img{
   height: 40%;
 }
 .popup_padding{
-  margin: 40px 120px;
+  margin: 30px 80px;
   overflow-y: auto;
   min-height:480px;
   max-height: 400px;
@@ -36,9 +36,13 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-
+  position: absolute;
+  right: 10px;
 }
 .close_img img{
   height: 80%;
   margin: 10px;
+}
+.close_img img:hover{
+  content: url("../../assets/close_fill.png");
 }

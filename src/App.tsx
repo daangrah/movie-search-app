@@ -1,13 +1,11 @@
-import React from 'react';
-import './App.css';
-import Header from "./components/Header";
-import {Route, Routes} from "react-router-dom";
-import Home from "./components/Home";
-import Top250 from "./components/Top250";
+import React from 'react'
+import './App.css'
+import Header from './components/Header'
+import { Route, Routes } from 'react-router-dom'
+import Home from './components/Home'
+import Top250 from './components/Top250'
 
-function App() {
-
-
+function App () {
   return (
     <div className="App">
       <Header />
@@ -15,10 +13,8 @@ function App() {
         <Route path='/' element={<Home />}/>
         <Route path='popular' element={<Top250 />}/>
       </Routes>
-
-
     </div>
   )
 }
 
-export default App;
+export default App

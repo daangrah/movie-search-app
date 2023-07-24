@@ -1,10 +1,15 @@
-import React from 'react';
-import "../App.css"
+import React from 'react'
+import '../App.css'
 
 const Loader = () => {
-	return (
-			<div className="custom-loader"></div>
-	);
-};
+  return (
+	  <div className="lds-ring">
+		  <div></div>
+		  <div></div>
+		  <div></div>
+		  <div></div>
+	  </div>
+  )
+}
 
-export default Loader;
+export default Loader
