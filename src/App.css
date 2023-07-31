@@ -3,7 +3,7 @@
   background-color: #59ae86;
 }
 
-.topMovies{
+.topMovies {
   /*display: grid;*/
   /*justify-items: center;*/
   /*grid-template-columns: repeat(3, 1fr);*/
@@ -17,7 +17,8 @@
   align-content: center;
   justify-content: center;
 }
-.rating{
+
+.rating {
   width: 60px;
   height: 30px;
   position: absolute;
@@ -29,7 +30,8 @@
   text-justify: auto;
   z-index: 100;
 }
-.movieCard{
+
+.movieCard {
   color: #f0f9f4;
   margin: 30px;
   border-radius: 10px;
@@ -39,7 +41,8 @@
   width: 300px;
   height: 300px;
 }
-.movieCard:hover{
+
+.movieCard:hover {
   margin: 30px;
   border-radius: 10px;
   background: #1f5d45;
@@ -48,18 +51,21 @@
   /*width: 320px;*/
   /*height: 320px;*/
 }
-.movieCard img{
+
+.movieCard img {
   margin-top: 10px;
   position: relative;
   height: 70%;
 }
-.header{
+
+.header {
   display: flex;
   justify-content: space-evenly;
   align-content: center;
   background-color: #0c221b;
 }
-.nav{
+
+.nav {
   font-size: 25px;
   font-weight: 600;
   width: 20%;
@@ -69,19 +75,23 @@
   color: #f0f9f4;
   text-decoration: none;
 }
-.nav:hover{
+
+.nav:hover {
   background-color: #1b4a38;
 }
+
 .header img {
   margin-bottom: -20px;
   height: 120px;
 }
+
 .lds-ring {
   display: inline-block;
   position: relative;
   width: 80px;
   height: 80px;
 }
+
 .lds-ring div {
   box-sizing: border-box;
   display: block;
@@ -94,15 +104,19 @@
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
   border-color: #28393b transparent transparent transparent;
 }
+
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
 }
+
 .lds-ring div:nth-child(2) {
   animation-delay: -0.3s;
 }
+
 .lds-ring div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);
