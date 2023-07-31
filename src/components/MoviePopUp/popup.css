@@ -31,6 +31,7 @@
   overflow-y: auto;
   min-height:480px;
   max-height: 400px;
+  text-align: left;
 }
 .close_img{
   display: flex;
@@ -45,4 +46,21 @@
 }
 .close_img img:hover{
   content: url("../../assets/close_fill.png");
+}
+.video_container{
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+.video{
+  max-width: 100%;
+  background: #28393b;
+  max-height: 320px;
+  min-height: 160px;
+}
+.popup_img{
+  float: left;
+  margin: 20px;
 }

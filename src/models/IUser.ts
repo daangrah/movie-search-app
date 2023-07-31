@@ -8,4 +8,5 @@ export interface IMovie {
   vote_average: number
   overview: string
   movie: string
+  first_air_date: string
 }

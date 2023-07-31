@@ -19,7 +19,7 @@ const Top250 = () => {
 
   return (
 		<div>
-			Most Popular Movies Now
+			<h1>Most Popular Movies Now</h1>
 				{isLoading
 				  ? (<Loader />)
 				  : (movies.length > 0)

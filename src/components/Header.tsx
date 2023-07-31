@@ -8,6 +8,7 @@ const Header = () => {
             <img src={MovieStock} alt=""/>
             <NavLink to="/" className='nav'>HOME PAGE</NavLink>
             <NavLink to="/popular" className='nav'>POPULAR MOVIES</NavLink>
+            <NavLink to="/popularSeries" className='nav'>POPULAR SERIES</NavLink>
         </div>)
 }
 
