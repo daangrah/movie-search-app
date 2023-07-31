@@ -5,12 +5,13 @@ import close from "../../assets/close.png";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchMovieVideo } from "../../store/reducers/ActionCreators";
 
-export const Popup = ({ closePopup, movie }) => {
+export const Popup = ({ closePopup, movie, overview }) => {
   const dispatch = useAppDispatch();
   const { movieKey } = useAppSelector((state) => state.movieReducer);
   useEffect(() => {
     dispatch(fetchMovieVideo(movie.id));
   }, []);
+  console.log(movie.overview);
   const url = `https://www.youtube.com/watch?v=${movieKey}`;
   return (
     <div className="popup-container">
@@ -27,10 +28,7 @@ export const Popup = ({ closePopup, movie }) => {
             className="popup_img"
           />
           <h1>{movie.title}</h1>
-          <div>
-            Release Date: {movie.release_date.slice(8, 10)}.
-            {movie.release_date.slice(5, 7)}.{movie.release_date.slice(0, 4)}.
-          </div>
+          <div>Release Date: {movie.release_date}</div>
           <p>Overview: {movie.overview}</p>
           <div className="video_container">
             <div className="video">

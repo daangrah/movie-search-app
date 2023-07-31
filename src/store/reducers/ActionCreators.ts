@@ -44,7 +44,6 @@ export const fetchMovies = () => {
           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
       },
     };
-    console.log(dispatch(movieFetching()));
     axios
       .request(options)
       .then(function (response) {
@@ -57,7 +56,7 @@ export const fetchMovies = () => {
 };
 export const fetchSeries = () => {
   return async (dispatch: AppDispatch) => {
-    // dispatch(movieFetching())
+    dispatch(movieFetching());
 
     const options = {
       method: "GET",
@@ -74,6 +73,7 @@ export const fetchSeries = () => {
       .request(options)
       .then(function (response) {
         dispatch(seriesFetchingSuccess(response.data.results));
+        console.log("sosi jopu");
       })
       .catch(function (error) {
         console.error(error);

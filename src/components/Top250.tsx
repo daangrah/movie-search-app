@@ -24,26 +24,47 @@ const Top250 = () => {
         <Loader />
       ) : movies.length > 0 ? (
         <div className="topMovies">
-          {movies.map((movie) => (
-            <div
-              key={movie.id}
-              className="movieCard"
-              onClick={() => {
-                setPopupId(movie.id);
-              }}
-            >
-              <div className="rating">{movie.vote_average.toFixed(1)}</div>
-              <img
-                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-                alt=""
-              />
-              <div>{movie.title}</div>
-              <div>Year: {movie.release_date.slice(0, 4)}</div>
-              {popupId === movie.id && (
-                <Popup closePopup={handleClosePopUp} movie={movie} />
-              )}
-            </div>
-          ))}
+          {movies.map(
+            ({
+              movie,
+              id,
+              vote_average,
+              poster_path,
+              title,
+              release_date,
+              overview,
+            }) => (
+              <div
+                key={id}
+                className="movieCard"
+                onClick={() => {
+                  setPopupId(id);
+                }}
+              >
+                <div className="rating">{vote_average.toFixed(1)}</div>
+                <img
+                  src={`https://image.tmdb.org/t/p/w200${poster_path}`}
+                  alt=""
+                />
+                <div>{title}</div>
+                <div>Year: {release_date}</div>
+                {popupId === id && (
+                  <Popup
+                    closePopup={handleClosePopUp}
+                    movie={{
+                      movie,
+                      id,
+                      vote_average,
+                      poster_path,
+                      title,
+                      release_date,
+                      overview,
+                    }}
+                  />
+                )}
+              </div>
+            ),
+          )}
         </div>
       ) : (
         <div>No Movies Found :(</div>

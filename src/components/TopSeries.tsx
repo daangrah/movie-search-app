@@ -7,11 +7,12 @@ import { fetchSeries } from "../store/reducers/ActionCreators";
 
 const TopSeries = () => {
   const dispatch = useAppDispatch();
-  const { movies, isLoading } = useAppSelector((state) => state.movieReducer);
-  const [popupId, setPopupId] = useState<number | null>(null);
   useEffect(() => {
     dispatch(fetchSeries());
   }, []);
+  const { movies, isLoading } = useAppSelector((state) => state.movieReducer);
+  const [popupId, setPopupId] = useState<number | null>(null);
+
   const handleClosePopUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setPopupId(null);
@@ -38,7 +39,7 @@ const TopSeries = () => {
                 alt=""
               />
               <div>{movie.name}</div>
-              <div>Year: {movie.first_air_date.slice(0, 4)}</div>
+              <div>Year: {movie.first_air_date}</div>
               {popupId === movie.id && (
                 <Popup closePopup={handleClosePopUp} movie={movie} />
               )}
