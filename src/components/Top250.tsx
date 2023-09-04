@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
-import { fetchMovies } from "../store/reducers/ActionCreators";
+// import { fetchMovies } from "../store/reducers/ActionCreators";
 import { Popup } from "./MoviePopUp/MoviePopUp";
 import Loader from "./Loader";
+import { movieFetching } from "../store/reducers/UserSlice";
 
 const Top250 = () => {
   const dispatch = useAppDispatch();
   const { movies, isLoading } = useAppSelector((state) => state.movieReducer);
   const [popupId, setPopupId] = useState<number | null>(null);
   useEffect(() => {
-    dispatch(fetchMovies());
+    console.log("opa");
+    dispatch(movieFetching());
   }, []);
   const handleClosePopUp = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
