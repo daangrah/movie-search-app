@@ -5,6 +5,7 @@ import {
   movieFetching,
   movieFetchingSuccess,
   movieVideoSucces,
+  seriesFetching,
   seriesFetchingSuccess,
 } from "./UserSlice";
 
@@ -20,26 +21,29 @@ const fetchTopMoviesFromAPI = async () =>
   await fetch(
     "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
     options,
-  )
-    .then((response) => response.json())
-    .then((response) => console.log(response))
-    .catch((err) => console.error(err));
-
+  );
+const fetchTopSeriesFromAPI = async () =>
+  await fetch(
+    "https://api.themoviedb.org/3/tv/popular?language=en-US&page=1",
+    options,
+  );
 function* workerGetMovies() {
   console.log("popal");
   const data = yield call(fetchTopMoviesFromAPI);
-  console.log(data.json);
-  const json = yield call(
-    async () =>
-      await new Promise((res) => {
-        res(dispatch(movieFetchingSuccess(data.results)));
-      }),
-  );
-  console.log(json);
+  // console.log(data.json);
+  const json = yield call(() => new Promise((res) => res(data.json())));
+  console.log(json.results);
+  yield put({ type: movieFetchingSuccess, payload: json.results });
+}
+function* workerGetSeries() {
+  const data = yield call(fetchTopSeriesFromAPI);
+  const json = yield call(() => new Promise((res) => res(data.json())));
+  yield put({ type: seriesFetchingSuccess, payload: json.results });
 }
 
 function* watcherClickSaga() {
   yield takeEvery(movieFetching, workerGetMovies);
+  yield takeEvery(seriesFetching, workerGetSeries);
 }
 export function* rootSaga() {
   yield all([watcherClickSaga()]);
@@ -92,29 +96,29 @@ export const fetchMovieVideo = (id) => {
 //       });
 //   };
 // };
-export const fetchSeries = () => {
-  return async (dispatch: AppDispatch) => {
-    dispatch(movieFetching());
-
-    const options = {
-      method: "GET",
-      url: "https://api.themoviedb.org/3/tv/top_rated",
-      params: { language: "en-US" },
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
-      },
-    };
-
-    axios
-      .request(options)
-      .then(function (response) {
-        dispatch(seriesFetchingSuccess(response.data.results));
-        console.log("sosi jopu");
-      })
-      .catch(function (error) {
-        console.error(error);
-      });
-  };
-};
+// export const fetchSeries = () => {
+//   return async (dispatch: AppDispatch) => {
+//     dispatch(movieFetching());
+//
+//     const options = {
+//       method: "GET",
+//       url: "https://api.themoviedb.org/3/tv/top_rated",
+//       params: { language: "en-US" },
+//       headers: {
+//         accept: "application/json",
+//         Authorization:
+//           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
+//       },
+//     };
+//
+//     axios
+//       .request(options)
+//       .then(function (response) {
+//         dispatch(seriesFetchingSuccess(response.data.results));
+//         console.log("sosi jopu");
+//       })
+//       .catch(function (error) {
+//         console.error(error);
+//       });
+//   };
+// };

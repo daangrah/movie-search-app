@@ -3,12 +3,12 @@ import "../App.css";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { Popup } from "./MoviePopUp/MoviePopUp";
 import Loader from "./Loader";
-import { fetchSeries } from "../store/reducers/ActionCreators";
+import { seriesFetching } from "../store/reducers/UserSlice";
 
 const TopSeries = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(fetchSeries());
+    dispatch(seriesFetching());
   }, []);
   const { movies, isLoading } = useAppSelector((state) => state.movieReducer);
   const [popupId, setPopupId] = useState<number | null>(null);
