@@ -4,11 +4,13 @@ import {
   getDefaultMiddleware,
 } from "@reduxjs/toolkit";
 import movieReducer from "./reducers/UserSlice";
+import seriesReducer from "./reducers/SeriesSlice";
 import createSagaMiddleware from "redux-saga";
 import { rootSaga } from "./reducers/ActionCreators";
 
 const rootReducer = combineReducers({
   movieReducer,
+  seriesReducer,
 });
 const sagaMiddleware = createSagaMiddleware();
 export const store = configureStore({

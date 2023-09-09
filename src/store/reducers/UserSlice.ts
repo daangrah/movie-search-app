@@ -1,4 +1,4 @@
-import { type IMovie } from "../../models/IUser";
+import { type IMovie, ISeries } from "../../models/IUser";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface MovieState {
@@ -9,7 +9,7 @@ interface MovieState {
   movieKey: string;
 }
 
-const initialState: MovieState = {
+const initialMovieState: MovieState = {
   movies: [],
   isLoading: false,
   error: "",
@@ -18,43 +18,44 @@ const initialState: MovieState = {
 };
 
 const movieSlice = createSlice({
-  name: "user",
-  initialState,
+  name: "movie",
+  initialState: initialMovieState,
   reducers: {
     movieFetching(state, action: PayloadAction) {
       state.isLoading = true;
-      console.log("load");
     },
-    seriesFetching(state, action: PayloadAction) {
-      state.isLoading = true;
-    },
+    // seriesFetching(state, action: PayloadAction) {
+    //   state.isLoading = true;
+    // },
     movieFetchingSuccess: function (state, action: PayloadAction) {
       state.isLoading = false;
       state.error = "";
       state.movies = action.payload;
     },
-    seriesFetchingSuccess: function (state, action: PayloadAction) {
-      state.isLoading = false;
-      state.error = "";
-      state.movies = action.payload;
-    },
-    movieVideoSucces: function (state, action: PayloadAction) {
+    // seriesFetchingSuccess: function (state, action: PayloadAction) {
+    //   state.isLoading = false;
+    //   state.error = "";
+    //   state.series = action.payload;
+    // },
+    movieVideoSuccess: function (state, action: PayloadAction) {
       state.isLoading = false;
       state.movieKey = action.payload;
     },
+    // seriesVideoFetching(state) {
+    //   state.isLoading = true;
+    // },
+    // seriesVideoSuccess: function (state, action: PayloadAction) {
+    //   state.isLoading = false;
+    //   state.seriesKey = action.payload;
+    // },
     movieFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.error = action.payload;
     },
   },
 });
-export const {
-  movieFetching,
-  movieFetchingSuccess,
-  movieVideoSucces,
-  seriesFetchingSuccess,
-  seriesFetching,
-  movieFetchingError,
-} = movieSlice.actions;
+
+export const { movieFetching, movieFetchingSuccess, movieVideoSuccess } =
+  movieSlice.actions;
 
 export default movieSlice.reducer;
