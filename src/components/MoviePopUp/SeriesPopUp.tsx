@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchSeriesVideoFromAPI } from "../../store/reducers/ActionCreators";
 import { seriesVideoFetching } from "../../store/reducers/SeriesSlice";
 
-export const PopupSeries = ({ closePopup, series }) => {
+export const PopupSeries = ({ closePopup, series, id }) => {
   const dispatch = useAppDispatch();
   const { seriesKey } = useAppSelector((state) => state.seriesReducer);
   useEffect(() => {

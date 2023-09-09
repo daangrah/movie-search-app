@@ -31,8 +31,9 @@ const seriesSlice = createSlice({
       state.error = "";
       state.series = action.payload;
     },
-    seriesVideoFetching(state) {
+    seriesVideoFetching(state, action: PayloadAction) {
       state.isLoading = true;
+      state.id = action.payload;
     },
     seriesVideoSuccess: function (state, action: PayloadAction) {
       state.isLoading = false;

@@ -31,17 +31,15 @@ const fetchTopSeriesFromAPI = async () =>
     "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
     options,
   );
-const fetchSeriesVideoFromAPI = async (TrueId) =>
+const fetchSeriesVideoFromAPI = async ({ id }) =>
   await fetch(
-    `https://api.themoviedb.org/3/tv/${TrueId}/videos?language=en-US`,
+    `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`,
     options,
   );
 function* workerGetSeriesVideo(id) {
   console.log(id);
-  const TrueId = id.payload;
-  const data = yield call(fetchSeriesVideoFromAPI, TrueId);
+  const data = yield call(fetchSeriesVideoFromAPI, id);
   const json = yield call(() => new Promise((res) => res(data.json())));
-  console.log(json);
   yield put({ type: seriesVideoSuccess, payload: json.results[0].key });
 }
 function* workerGetMovies() {
@@ -60,9 +58,9 @@ function* workerGetSeries() {
 }
 
 function* watcherClickSaga() {
-  yield takeEvery(movieFetching, workerGetMovies);
-  yield takeEvery(seriesFetching, workerGetSeries);
-  yield takeEvery(seriesVideoFetching, workerGetSeriesVideo);
+  yield takeEvery(movieFetching.type, workerGetMovies);
+  yield takeEvery(seriesFetching.type, workerGetSeries);
+  yield takeEvery(seriesVideoFetching.type, workerGetSeriesVideo);
 }
 export function* rootSaga() {
   yield all([watcherClickSaga()]);

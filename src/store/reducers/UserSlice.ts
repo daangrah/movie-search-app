@@ -21,7 +21,7 @@ const movieSlice = createSlice({
   name: "movie",
   initialState: initialMovieState,
   reducers: {
-    movieFetching(state, action: PayloadAction) {
+    movieFetching(state) {
       state.isLoading = true;
     },
     // seriesFetching(state, action: PayloadAction) {
