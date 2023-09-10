@@ -1,17 +1,16 @@
-import React, { useEffect } from "react";
-import ReactPlayer from "react-player";
-import "./popup.css";
-import close from "../../assets/close.png";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchMovieVideo } from "../../store/reducers/ActionCreators";
+import React, { useEffect } from 'react';
+import ReactPlayer from 'react-player';
+import './popup.css';
+import close from '../../assets/close.png';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { fetchMovieVideo } from '../../store/reducers/ActionCreators';
 
-export const Popup = ({ closePopup, movie, overview }) => {
+export const Popup = ({ closePopup, movie }: any) => {
   const dispatch = useAppDispatch();
   const { movieKey } = useAppSelector((state) => state.movieReducer);
   useEffect(() => {
     dispatch(fetchMovieVideo(movie.id));
   }, []);
-  console.log(movie.overview);
   const url = `https://www.youtube.com/watch?v=${movieKey}`;
   return (
     <div className="popup-container">

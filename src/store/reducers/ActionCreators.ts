@@ -1,141 +1,92 @@
-import { type AppDispatch } from "../store";
-import axios from "axios";
-import { takeEvery, call, all, put } from "redux-saga/effects";
-import {
-  movieFetching,
-  movieFetchingSuccess,
-  movieVideoSuccess,
-} from "./UserSlice";
+import { type AppDispatch } from '../store';
+import axios from 'axios';
+import { takeEvery, call, all, put } from 'redux-saga/effects';
+import { movieFetching, movieFetchingSuccess, movieVideoSuccess } from './UserSlice';
 import {
   seriesFetching,
   seriesFetchingSuccess,
   seriesVideoFetching,
   seriesVideoSuccess,
-} from "./SeriesSlice";
+} from './SeriesSlice';
 
 const options = {
-  method: "GET",
+  method: 'GET',
   headers: {
-    accept: "application/json",
+    accept: 'application/json',
     Authorization:
-      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
+      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA',
   },
 };
 const fetchTopMoviesFromAPI = async () =>
-  await fetch(
-    "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
-    options,
+  await fetch('https://api.themoviedb.org/3/movie/popular?language=en-US&page=1', options).then(
+    (response) => response.json(),
   );
 const fetchTopSeriesFromAPI = async () =>
-  await fetch(
-    "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1",
-    options,
+  await fetch('https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1', options).then(
+    (response) => response.json(),
   );
-const fetchSeriesVideoFromAPI = async ({ id }) =>
-  await fetch(
-    `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`,
-    options,
-  );
-function* workerGetSeriesVideo(id) {
-  console.log(id);
-  const data = yield call(fetchSeriesVideoFromAPI, id);
-  const json = yield call(() => new Promise((res) => res(data.json())));
-  yield put({ type: seriesVideoSuccess, payload: json.results[0].key });
-}
+
 function* workerGetMovies() {
-  console.log("popal");
+  console.log('popal');
   const data = yield call(fetchTopMoviesFromAPI);
-  // console.log(data.json);
-  const json = yield call(() => new Promise((res) => res(data.json())));
-  console.log(json.results);
-  yield put({ type: movieFetchingSuccess, payload: json.results });
+  console.log(data.results);
+  yield put({ type: movieFetchingSuccess, payload: data.results });
 }
 function* workerGetSeries() {
   const data = yield call(fetchTopSeriesFromAPI);
-  const json = yield call(() => new Promise((res) => res(data.json())));
-  console.log(json);
-  yield put({ type: seriesFetchingSuccess, payload: json.results });
+  console.log(data);
+  yield put({ type: seriesFetchingSuccess, payload: data.results });
 }
 
 function* watcherClickSaga() {
-  yield takeEvery(movieFetching.type, workerGetMovies);
-  yield takeEvery(seriesFetching.type, workerGetSeries);
-  yield takeEvery(seriesVideoFetching.type, workerGetSeriesVideo);
+  yield takeEvery(movieFetching, workerGetMovies);
+  yield takeEvery(seriesFetching, workerGetSeries);
 }
 export function* rootSaga() {
   yield all([watcherClickSaga()]);
 }
 
-export const fetchMovieVideo = (id) => {
+export const fetchMovieVideo = (id): any => {
   return async (dispatch: AppDispatch) => {
     const options = {
-      method: "GET",
+      method: 'GET',
       url: `https://api.themoviedb.org/3/movie/${id}/videos`,
-      params: { language: "en-US" },
+      params: { language: 'en-US' },
       headers: {
-        accept: "application/json",
+        accept: 'application/json',
         Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA',
       },
     };
     axios
       .request(options)
       .then(function (response) {
         dispatch(movieVideoSuccess(response.data.results[0].key));
-        console.log(response.data.results[0].key);
       })
       .catch(function (error) {
         console.error(error);
       });
   };
 };
-
-// export const fetchMovies = () => {
-//   return async (dispatch: AppDispatch) => {
-//     dispatch(movieFetching());
-//     const options = {
-//       method: "GET",
-//       url: "https://api.themoviedb.org/3/trending/movie/day",
-//       params: { language: "en-US" },
-//       headers: {
-//         accept: "application/json",
-//         Authorization:
-//           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
-//       },
-//     };
-//     axios
-//       .request(options)
-//       .then(function (response) {
-//         dispatch(movieFetchingSuccess(response.data.results));
-//       })
-//       .catch(function (error) {
-//         console.error(error);
-//       });
-//   };
-// };
-// export const fetchSeries = () => {
-//   return async (dispatch: AppDispatch) => {
-//     dispatch(movieFetching());
-//
-//     const options = {
-//       method: "GET",
-//       url: "https://api.themoviedb.org/3/tv/top_rated",
-//       params: { language: "en-US" },
-//       headers: {
-//         accept: "application/json",
-//         Authorization:
-//           "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA",
-//       },
-//     };
-//
-//     axios
-//       .request(options)
-//       .then(function (response) {
-//         dispatch(seriesFetchingSuccess(response.data.results));
-//         console.log("sosi jopu");
-//       })
-//       .catch(function (error) {
-//         console.error(error);
-//       });
-//   };
-// };
+export const fetchSeriesVideo = (id): any => {
+  return async (dispatch: AppDispatch) => {
+    const options = {
+      method: 'GET',
+      url: `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`,
+      params: { language: 'en-US' },
+      headers: {
+        accept: 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJhZmMyMjA4ZWQ4ODk0OTIwMjY0ZDllNGM3OGZkNDhlYyIsInN1YiI6IjY0OWMzMzJlNzdjMDFmMDBjYTVhYTkxMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KtN-jjPloqFEM021pITpc88QdOROqqtVOnTYz3qZbTA',
+      },
+    };
+    axios
+      .request(options)
+      .then(function (response) {
+        dispatch(seriesVideoSuccess(response.data.results[0].key));
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
+};

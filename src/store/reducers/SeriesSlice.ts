@@ -7,7 +7,6 @@ interface SeriesState {
   error: string;
   length: number;
   seriesKey: string;
-  id: number;
 }
 
 const initialSeriesState: SeriesState = {
@@ -16,7 +15,6 @@ const initialSeriesState: SeriesState = {
   error: "",
   length: 0,
   seriesKey: "",
-  id: 0,
 };
 
 const seriesSlice = createSlice({
@@ -33,7 +31,6 @@ const seriesSlice = createSlice({
     },
     seriesVideoFetching(state, action: PayloadAction) {
       state.isLoading = true;
-      state.id = action.payload;
     },
     seriesVideoSuccess: function (state, action: PayloadAction) {
       state.isLoading = false;

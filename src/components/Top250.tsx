@@ -45,7 +45,7 @@ const Top250 = () => {
               >
                 <div className="rating">{vote_average.toFixed(1)}</div>
                 <img
-                  src={`https://image.tmdb.org/t/p/w200${poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w300${poster_path}`}
                   alt=""
                 />
                 <div>{title}</div>

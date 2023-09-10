@@ -1,4 +1,4 @@
-import { type IMovie, ISeries } from "../../models/IUser";
+import { type IMovie } from "../../models/IUser";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 interface MovieState {
@@ -24,30 +24,15 @@ const movieSlice = createSlice({
     movieFetching(state) {
       state.isLoading = true;
     },
-    // seriesFetching(state, action: PayloadAction) {
-    //   state.isLoading = true;
-    // },
     movieFetchingSuccess: function (state, action: PayloadAction) {
       state.isLoading = false;
       state.error = "";
       state.movies = action.payload;
     },
-    // seriesFetchingSuccess: function (state, action: PayloadAction) {
-    //   state.isLoading = false;
-    //   state.error = "";
-    //   state.series = action.payload;
-    // },
     movieVideoSuccess: function (state, action: PayloadAction) {
       state.isLoading = false;
       state.movieKey = action.payload;
     },
-    // seriesVideoFetching(state) {
-    //   state.isLoading = true;
-    // },
-    // seriesVideoSuccess: function (state, action: PayloadAction) {
-    //   state.isLoading = false;
-    //   state.seriesKey = action.payload;
-    // },
     movieFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.error = action.payload;

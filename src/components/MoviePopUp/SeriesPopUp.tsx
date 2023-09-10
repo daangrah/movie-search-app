@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import ReactPlayer from "react-player";
-import "./popup.css";
-import close from "../../assets/close.png";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchSeriesVideoFromAPI } from "../../store/reducers/ActionCreators";
-import { seriesVideoFetching } from "../../store/reducers/SeriesSlice";
+import React, { useEffect } from 'react';
+import ReactPlayer from 'react-player';
+import './popup.css';
+import close from '../../assets/close.png';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { seriesVideoFetching } from '../../store/reducers/SeriesSlice';
+import { fetchSeriesVideo } from '../../store/reducers/ActionCreators';
 
-export const PopupSeries = ({ closePopup, series, id }) => {
+export const PopupSeries = ({ closePopup, series }: any) => {
   const dispatch = useAppDispatch();
   const { seriesKey } = useAppSelector((state) => state.seriesReducer);
   useEffect(() => {
-    dispatch(seriesVideoFetching(series.id));
+    dispatch(fetchSeriesVideo(series.id));
   }, []);
   const url = `https://www.youtube.com/watch?v=${seriesKey}`;
   return (
@@ -23,7 +23,7 @@ export const PopupSeries = ({ closePopup, series, id }) => {
         </div>
         <div className="popup_padding">
           <img
-            src={`https://image.tmdb.org/t/p/w200${series.poster_path}`}
+            src={`https://image.tmdb.org/t/p/w300${series.poster_path}`}
             alt=""
             className="popup_img"
           />
